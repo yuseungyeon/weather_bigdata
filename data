@@ -1,0 +1,15 @@
+list <- dbGetQuery(conn, 'show tables')
+
+buy2018_1 <- dbGetQuery(conn, 'select * from buy2018_1')
+buy2018_2 <- dbGetQuery(conn, 'select * from buy2018_2')
+buy2019_1 <- dbGetQuery(conn, 'select * from buy2019_1')
+buy2019_2 <- dbGetQuery(conn, 'select * from buy2019_2')
+
+colnames(buy2018_1) <- c('date', 'sex', 'age', 'big_cat', 'sm_cat', 'qty')
+colnames(buy2018_2) <- c('date', 'sex', 'age', 'big_cat', 'sm_cat', 'qty')
+colnames(buy2019_1) <- c('date', 'sex', 'age', 'big_cat', 'sm_cat', 'qty')
+colnames(buy2019_2) <- c('date', 'sex', 'age', 'big_cat', 'sm_cat', 'qty')
+
+data <- rbind(buy2018_1, buy2018_2, buy2019_1, buy2019_2)
+
+write.csv(data, "buy_data.csv", fileEncoding='utf-8')
