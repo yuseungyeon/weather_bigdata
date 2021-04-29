@@ -13,3 +13,16 @@ colnames(buy2019_2) <- c('date', 'sex', 'age', 'big_cat', 'sm_cat', 'qty')
 data <- rbind(buy2018_1, buy2018_2, buy2019_1, buy2019_2)
 
 write.csv(data, "buy_data.csv", fileEncoding='utf-8')
+
+sns2018_1 <- dbGetQuery(conn, 'select * from sns2018_1')
+sns2018_2 <- dbGetQuery(conn, 'select * from sns2018_2')
+sns2019_1 <- dbGetQuery(conn, 'select * from sns2019_1')
+sns2019_2 <- dbGetQuery(conn, 'select * from sns2019_2')
+
+colnames(sns2018_1) <- c('date', 'big_cat', 'sm_cat', 'cnt')
+colnames(sns2018_2) <- c('date', 'big_cat', 'sm_cat', 'cnt')
+colnames(sns2019_1) <- c('date', 'big_cat', 'sm_cat', 'cnt')
+colnames(sns2019_2) <- c('date', 'big_cat', 'sm_cat', 'cnt')
+
+sns_data <- rbind(sns2018_1, sns2018_2, sns2019_1, sns2019_2)
+write.csv(sns_data, 'sns_data.csv', fileEncoding='utf-8')
