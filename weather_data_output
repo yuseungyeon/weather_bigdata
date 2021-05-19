@@ -1,0 +1,103 @@
+list <- dbGetQuery(conn, 'show tables')
+View(list)
+
+#warn_code
+wrn_cd<- dbGetQuery(conn, "SELECT *  FROM DB_COMN_WRN_CD")
+head(wrn_cd)
+table(wrn_cd$db_comn_wrn_cd.wrn_knd)
+#warn code p155확확인
+
+#check region code
+wrn_fc<- dbGetQuery(conn, "SELECT *  FROM DB_COMN_WRN_FC_ZONE")
+head(wrn_fc)
+
+
+#special
+#wind 여부 2018  
+wind2018<- dbGetQuery(conn, "SELECT * FROM DB_COMN_WRN_CD WHERE WRN_KND==1 and FC_TMA LIKE '2018%'")
+view(wind2018)
+str(wind2018)
+#wind 여부 2019  
+wind2019<- dbGetQuery(conn, "SELECT * FROM DB_COMN_WRN_CD WHERE WRN_KND==1 and FC_TMA LIKE '2019%'")
+head(wind2019)
+wind <- rbind(wind2018, wind2019)
+
+
+#cold 여부 2018
+cold2018<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==3 and FC_TMA LIKE '2018%'")
+head(cold2018)
+#cold 여부 2019
+cold2019<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==3 and FC_TMA LIKE '2019%'")
+head(cold2019)
+cold <- rbind(cold2018, cold2019)
+
+#dry 여부 2018
+dry2018<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==4 and FC_TMA LIKE '2018%'")
+head(dry2018)
+#dry 여부 2019
+dry2019<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==4 and FC_TMA LIKE '2019%'")
+head(dry2019)
+dry <- rbind(dry2018, dry2019)
+
+
+#storm 여부 2018
+storm2018<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==7 and FC_TMA LIKE '2018%'")
+head(storm2018)
+#storm 여부 2019
+storm2019<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==7 and FC_TMA LIKE '2019%'")
+head(storm2019)
+storm <- rbind(storm2018, storm2019)
+
+
+#snow 여부2018
+snow2018<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==8 and FC_TMA LIKE '2018%'")
+head(snow2018)
+#snow 여부2019
+snow2019<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==8 and FC_TMA LIKE '2019%'")
+head(snow2019)
+snow <- rbind(snow2018, snow2019)
+
+
+#sand 여부 2018
+sand2018<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==9 and FC_TMA LIKE '2018%'")
+head(sand2018)
+#sand 여부 2019
+sand2019<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==9 and FC_TMA LIKE '2019%'")
+head(sand2019)
+sand <- rbind(sand2018, sand2019)
+
+
+#heat 여부 2018
+heat2018<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==12 and FC_TMA LIKE '2018%'")
+head(heat2018)
+#heat 여부 2019
+heat2019<- dbGetQuery(conn, "SELECT FC_TMA  FROM DB_COMN_WRN_CD WHERE WRN_KND==12 and FC_TMA LIKE '2019%'")
+head(heat2019)
+heat <- rbind(heat2018, heat2019)
+
+
+#강수 2018
+rain2018<- dbGetQuery(conn, "SELECT TMA, SUM_RN, STN_ID FROM DB_AWS_RN_DD WHERE TMA LIKE '2018%'")
+head(rain2018)
+#강수 2019
+rain2019<- dbGetQuery(conn, "SELECT TMA, SUM_RN, STN_ID FROM DB_AWS_RN_DD WHERE TMA LIKE '2019%'")
+head(rain2019)
+rain <- rbind(rain2018, rain2019)
+
+
+#기온 2018
+temp2018<- dbGetQuery(conn, "SELECT TMA, AVG_TA, STN_ID FROM DB_AWS_TA_DD WHERE TMA LIKE '2018%'")
+head(temp2018)
+#기온 2019
+temp2019<- dbGetQuery(conn, "SELECT TMA, AVG_TA, STN_ID FROM DB_AWS_TA_DD WHERE TMA LIKE '2019%'")
+head(temp2019)
+temp <- rbind(temp2018, temp2019)
+
+write.csv(rain, "weather_rain.csv", fileEncoding = 'utf-8')
+write.csv(temp, 'weather_temp.csv', fileEncoding = 'utf-8')
+write.csv(dry, "weather_dry.csv", fileEncoding = 'utf-8')
+write.csv(cold, 'weather_cold.csv', fileEncoding = 'utf-8')
+write.csv(heat, "weather_heat.csv", fileEncoding = 'utf-8')
+write.csv(sand, 'weather_sand.csv', fileEncoding = 'utf-8')
+write.csv(snow, "weather_snow.csv", fileEncoding = 'utf-8')
+write.csv(wind, 'weather_wind.csv', fileEncoding = 'utf-8')
